@@ -720,8 +720,9 @@ document.getElementById('info-close').addEventListener('click', e => { e.stopPro
 // Search / Filter
 // ============================================================
 
-// Neighborhood dropdown
+// Neighborhood dropdown (removed from UI)
 const neighborhoodSelect = document.getElementById('neighborhood-select');
+if (!neighborhoodSelect) { /* no-op */ } else {
 
 function populateNeighborhoods() {
   const hoods = {};
@@ -776,6 +777,7 @@ neighborhoodSelect.addEventListener('change', () => {
     smoothFlyTo(cx + 120, 240, cz + 360, cx, 0, cz);
   }
 });
+} // end neighborhoodSelect guard
 
 function getAllTrees() {
   const all = [];
