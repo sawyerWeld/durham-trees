@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Every Tree in Durham</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="canvas"></canvas>
+      
+      <!-- Loading -->
+      <div id="loading">
+        <div class="load-inner">
+          <div class="spinner"></div>
+          <p class="load-title">Every Tree in Durham</p>
+          <p class="load-sub">Loading 10,000 trees…</p>
+        </div>
+      </div>
+
+      <!-- Title (fades after intro) -->
+      <div id="title" class="ui-fade hidden">
+        <h1>Every Tree in Durham</h1>
+        <p class="tagline"><span id="tree-count">10,000</span> trees from Durham's urban canopy</p>
+      </div>
+
+      <!-- Neighborhood selector -->
+      <div id="filter-bar" class="ui-fade hidden">
+        <select id="neighborhood-select">
+          <option value="">All neighborhoods</option>
+        </select>
+      </div>
+
+      <!-- Stats panel (collapsible) -->
+      <div id="stats-panel" class="ui-fade hidden">
+        <button id="stats-toggle" aria-label="Toggle stats">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg>
+          <span>Stats</span>
+        </button>
+        <div id="stats-body" class="collapsed">
+          <div id="stats-content"></div>
+        </div>
+      </div>
+
+      <!-- Info card (click on tree) -->
+      <div id="info-card" class="hidden">
+        <button id="info-close" aria-label="Close">&times;</button>
+        <div id="info-card-content"></div>
+      </div>
+
+      <!-- Hover tooltip -->
+      <div id="tooltip" class="hidden"></div>
+
+      <!-- Compass -->
+      <div id="compass" class="ui-fade hidden" title="Click to face North">
+        <svg id="compass-svg" width="56" height="56" viewBox="0 0 56 56">
+          <circle cx="28" cy="28" r="26" fill="rgba(8,11,20,0.8)" stroke="rgba(100,200,255,0.3)" stroke-width="1.5"/>
+          <polygon id="compass-needle-n" points="28,6 32,28 24,28" fill="rgba(100,200,255,0.9)"/>
+          <polygon id="compass-needle-s" points="28,50 32,28 24,28" fill="rgba(100,200,255,0.25)"/>
+          <text x="28" y="19" text-anchor="middle" fill="#c8e6ff" font-size="9" font-family="DM Sans,sans-serif" font-weight="bold">N</text>
+        </svg>
+      </div>
+
+      <!-- Minimal footer -->
+      <div id="footer" class="ui-fade hidden">
+        <span>Data: <a href="https://live-durhamnc.opendata.arcgis.com/" target="_blank" rel="noopener">City of Durham</a></span>
+        <span class="sep">·</span>
+        <span>By <a href="https://sawyerwelden.com" target="_blank" rel="noopener">Sawyer Welden</a></span>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
