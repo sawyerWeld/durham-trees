@@ -919,13 +919,12 @@ function animate(now) {
 // ============================================================
 
 createGround();
-loadTrees().catch(err => {
-  console.error('Failed to load tree data:', err);
-  document.getElementById('loading').innerHTML = `<div class="load-inner"><div class="load-title">Error</div><div class="load-sub">Failed to load tree data. Check console.</div></div>`;
-}).then(() => {
-  // Hide loader
+loadTrees().then(() => {
   document.getElementById('loading').classList.add('done');
   animate(performance.now());
+}).catch(err => {
+  console.error('Failed to load tree data:', err);
+  document.getElementById('loading').innerHTML = `<div class="load-inner"><div class="load-title">Error</div><div class="load-sub">Failed to load tree data. Check console.</div></div>`;
 });
 
 // Cleanup on page unload
