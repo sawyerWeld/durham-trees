@@ -798,8 +798,7 @@ function clearFilter() {
     trunk.material.opacity = 1;
     trunk.material.needsUpdate = true;
   });
-  // Fly back to overview
-  smoothFlyTo(0, 720, 60, 0, 0, 0);
+  // Stay where we are, just restore colors
 }
 
 // ============================================================
