@@ -742,64 +742,7 @@ document.getElementById('info-close').addEventListener('click', e => { e.stopPro
 // Search / Filter
 // ============================================================
 
-// Neighborhood dropdown (removed from UI)
-const neighborhoodSelect = document.getElementById('neighborhood-select');
-if (!neighborhoodSelect) { /* no-op */ } else {
-
-function populateNeighborhoods() {
-  const hoods = {};
-  getAllTrees().forEach(t => {
-    const n = t.neighborhood;
-    if (!n || n === 'Unknown') return;
-    if (!hoods[n]) hoods[n] = 0;
-    hoods[n]++;
-  });
-  const sorted = Object.entries(hoods).sort((a, b) => b[1] - a[1]);
-  sorted.forEach(([name, count]) => {
-    const opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = `${name} (${count} trees)`;
-    neighborhoodSelect.appendChild(opt);
-  });
-}
-
-const FLY_HEIGHT = 240; // fixed height for neighborhood views
-
-neighborhoodSelect.addEventListener('change', () => {
-  const val = neighborhoodSelect.value;
-  if (!val) {
-    clearFilter();
-    return;
-  }
-  // Highlight matching trees
-  Object.values(instancedGroups).forEach(({ canopy, trunk, trees }) => {
-    trees.forEach((tree, i) => {
-      const match = tree.neighborhood === val;
-      const col = match ? tree.color.clone() : tree.color.clone().multiplyScalar(0.15);
-      canopy.setColorAt(i, col);
-    });
-    canopy.instanceColor.needsUpdate = true;
-    trunk.material.opacity = 0.4;
-  });
-  Object.values(instancedGroups).forEach(({ trunk, trees }) => {
-    const hasMatch = trees.some(t => t.neighborhood === val);
-    trunk.material.opacity = hasMatch ? 0.9 : 0.15;
-    trunk.material.needsUpdate = true;
-  });
-  activeFilter = val;
-
-  // Fly to neighborhood — match intro camera angle
-  const matching = getAllTrees().filter(t => t.neighborhood === val);
-  if (matching.length > 0) {
-    let cx = 0, cz = 0;
-    matching.forEach(t => { cx += t.x; cz += t.z; });
-    cx /= matching.length;
-    cz /= matching.length;
-    // Same height (240) and yaw offset as intro end: camera at +120x, +360z from target
-    smoothFlyTo(cx + 120, 240, cz + 360, cx, 0, cz);
-  }
-});
-} // end neighborhoodSelect guard
+// Neighborhood dropdown removed
 
 function getAllTrees() {
   const all = [];
