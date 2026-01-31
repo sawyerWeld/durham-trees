@@ -675,8 +675,27 @@ function onClick(e) {
   const signHits = raycaster.intersectObjects(signs);
   if (signHits.length > 0) {
     const name = signHits[0].object.userData.neighborhood;
-    neighborhoodSelect.value = name;
-    neighborhoodSelect.dispatchEvent(new Event('change'));
+    // Filter to this neighborhood
+    activeFilter = name;
+    Object.values(instancedGroups).forEach(({ canopy, trunk, trees }) => {
+      trees.forEach((tree, i) => {
+        const match = tree.neighborhood === name;
+        const col = match ? tree.color.clone() : tree.color.clone().multiplyScalar(0.15);
+        canopy.setColorAt(i, col);
+      });
+      canopy.instanceColor.needsUpdate = true;
+      const hasMatch = trees.some(t => t.neighborhood === name);
+      trunk.material.opacity = hasMatch ? 0.9 : 0.15;
+      trunk.material.needsUpdate = true;
+    });
+    // Fly to it
+    const matching = getAllTrees().filter(t => t.neighborhood === name);
+    if (matching.length > 0) {
+      let cx = 0, cz = 0;
+      matching.forEach(t => { cx += t.x; cz += t.z; });
+      cx /= matching.length; cz /= matching.length;
+      smoothFlyTo(cx, 240, cz - 360, cx, 0, cz);
+    }
     return;
   }
 
@@ -684,6 +703,10 @@ function onClick(e) {
     showInfoCard(hoveredTree);
   } else {
     hideInfoCard();
+    // If filtered, clicking empty space clears the filter
+    if (activeFilter) {
+      clearFilter();
+    }
   }
 }
 
