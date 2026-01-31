@@ -419,7 +419,6 @@ async function loadTrees() {
   });
 
   buildNeighborhoodSigns();
-  populateNeighborhoods();
   buildStats();
 }
 
